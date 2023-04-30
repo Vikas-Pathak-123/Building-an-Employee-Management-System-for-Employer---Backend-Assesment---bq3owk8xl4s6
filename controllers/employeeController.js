@@ -43,7 +43,10 @@ const deleteEmployee = async (req, res) => {
   try {
     const deletedEmployees = await Employee.deleteMany({
       salary: { $gt: 10000 },
-    });
+    });    
+    if(!deletedEmployees){
+      res.status(404).json({ error: "employees not found" });    
+    }
     res.json(deletedEmployees);
   } catch (err) {
     res.status(500).json({ error: "Failed to delete employees" });
