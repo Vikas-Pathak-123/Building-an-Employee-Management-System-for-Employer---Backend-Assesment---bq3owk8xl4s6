@@ -9,7 +9,7 @@ const filterQueries = async (req, res) => {
   const { page = 1, limit = 10, sortBy = "salary" } = req.query;
 
   try {
-    const employees = await Employee.find({ salary: { $gt: 10000 } })
+    const employees = await Employee.find()
       .sort(sortBy)
       .limit(parseInt(limit))
       .skip((page - 1) * limit);
