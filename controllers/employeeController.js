@@ -5,7 +5,7 @@ const createEmployee = async (req, res) => {
   try {
     const employee = new Employee(req.body);
     const savedEmployee = await employee.save();
-    res.status(201).json({newEmployee:savedEmployee});
+    res.status(201).json(savedEmployee);
   } catch (err) {
     res.status(500).json({ error: "Failed to create employee" });
   }
@@ -17,9 +17,8 @@ const getEmployee = async (req, res) => {
     const employee = await Employee.findById(req.params.id);
 
     res.json(employee);
-    
   } catch (err) {
-    res.status(404).json({ error: "Employee not found"});
+    res.status(404).json({ error: "Employee not found" });
   }
 };
 
@@ -29,20 +28,25 @@ const updateEmployee = async (req, res) => {
     await Employee.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-    res.json({message: "Employee details updated successfully"});
+    res.json({ message: "Employee details updated successfully" });
   } catch (err) {
-    res.status(404).json({error: "Employee not found" });
+    res.status(404).json({ error: "Employee not found" });
   }
 };
 
 const deleteEmployee = async (req, res) => {
   try {
-    await Employee.deleteMany({
+    const result = await Employee.deleteMany({
       salary: { $gt: 10000 },
-    });    
-    res.json({message: "employees deleted successfully"});
+    });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: "employees not found" });
+    }
+
+    res.json({ message: "employees deleted successfully" });
   } catch (err) {
-    res.status(404).json({ error: "employees not found" });    
+    res.status(500).json({ error: "something went wrong" });
   }
 };
 
