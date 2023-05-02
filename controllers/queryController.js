@@ -12,9 +12,9 @@ const filterQueries = async (req, res) => {
       .sort(sortBy)
       .limit(parseInt(limit))
       .skip((page - 1) * limit);
-    res.status(200).json({
+    res.status(200).json(
       employees
-    });
+    );
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal Server Error" });
