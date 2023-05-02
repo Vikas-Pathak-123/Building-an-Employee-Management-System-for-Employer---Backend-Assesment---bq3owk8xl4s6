@@ -41,7 +41,7 @@ const deleteEmployee = async (req, res) => {
     });
 
     if (result.deletedCount === 0) {
-      return res.status(404).json({ error: " No employees found" });
+      return res.status(404).json({ error: "No employees found" });
     }
 
     res.json({ message: "employees deleted successfully" });
