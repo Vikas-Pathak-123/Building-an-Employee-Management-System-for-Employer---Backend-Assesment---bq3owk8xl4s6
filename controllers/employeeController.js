@@ -5,7 +5,7 @@ const createEmployee = async (req, res) => {
   try {
     const employee = new Employee(req.body);
     const savedEmployee = await employee.save();
-    res.status(201).json(savedEmployee);
+    res.status(201).json({ newEmployee: savedEmployee });
   } catch (err) {
     res.status(500).json({ error: "Failed to create employee" });
   }
@@ -41,7 +41,7 @@ const deleteEmployee = async (req, res) => {
     });
 
     if (result.deletedCount === 0) {
-      return res.status(404).json({ error: "employees not found" });
+      return res.status(404).json({ error: " No employees found" });
     }
 
     res.json({ message: "employees deleted successfully" });
